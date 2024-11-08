@@ -4,34 +4,6 @@ import matplotlib.pyplot as plt
 import numpy
 
 
-#ENVIRONMENTAL DESIGN
-
-# LoadedEnv = EnvironmentAnalysis.load("EuRoC_Env.json")
-#
-# Env = Environment(
-#         latitude = 39.39005,
-#        longitude =-8.28929,
-#     elevation = 160,
-#     datum="SIRGAS2000")
-#
-# Env.set_date(datetime.datetime.now())
-# # "10" is taken as the hour of launch
-#
-# # Temperature in K
-# for T_Value in LoadedEnv["atmosphericModelTemperatureProfile"]["15"] :
-#     T_Value[1] = T_Value[1] + 273.15
-#
-# # Pressure in Pascal
-# for p_Value in LoadedEnv["atmosphericModelPressureProfile"]["15"] :
-#     p_Value[1] = p_Value[1]*100
-#
-# Env.set_atmospheric_model(type= "custom_atmosphere",
-#                           pressure= LoadedEnv["atmosphericModelPressureProfile"]["15"],
-#                           temperature = LoadedEnv["atmosphericModelTemperatureProfile"]["15"],
-#                           wind_u = LoadedEnv["atmosphericModelWindVelocityXProfile"]["15"],
-#                           wind_v = LoadedEnv["atmosphericModelWindVelocityYProfile"]["15"])
-#
-#Env.all_info()
 
 Env = Environment(
     latitude = 39.39005,
@@ -39,27 +11,13 @@ Env = Environment(
     elevation = 160,#LoadedEnv["elevation"],
     datum="WGS84"
           )
-date = datetime.datetime(2024,10,12,10)
+date = datetime.datetime(2024,11,10,10)
 Env.set_date(date=date,timezone='UTC')
 
 
 #Env.set_atmospheric_model(type='Forecast', file='GFS')
 Env.set_atmospheric_model(type='Windy', file= 'ECMWF')
-#
-# #Env.set_atmospheric_model(type="custom_atmosphere", wind_u=0,wind_v=0)
-# np= numpy.linspace(0,3000,num=6000)
 
-# wind data
-# plt.plot(Env.wind_velocity_x(np),np)
-# plt.plot(Env.wind_velocity_y(np),np)
-# plt.plot(Env.wind_speed(np),np)
-# plt.grid(True)
-# plt.xlabel("Wind Velocity [m/s]")
-# plt.xlim(0,20)
-# plt.title("Wind Velocity over Altitude")
-# plt.ylabel("Altitude [m]")
-# plt.legend(["Wind_x","Wind_y","Wind_tot"])
-# plt.show()
 
 
 
@@ -234,73 +192,4 @@ drogue = VES.add_parachute(
 
 TestFlight = Flight(rocket = VES, environment = Env, inclination = 85, rail_length = 12, heading=133)
 
-#TestFlight.prints.apogee_conditions()
-TestFlight.prints.impact_conditions()
-#TestFlight.prints.out_of_rail_conditions()
-
-
-#VES.draw()
-#TestFlight.plots.trajectory_3d()
-# #
-# # #USEFUL PLOTS
-np1 = numpy.linspace(0,25.418, num = 1000)
-np2 = numpy.linspace(25.418,180,num = 1000)
-np = numpy.linspace(0,180,num=1000)
-#
-# # plt.plot(np,VES.cp_position(np))
-# # plt.show()
-#
-# plt.plot(np,TestFlight.acceleration(np), color = "black", linewidth= "2", label="Acceleration")
-# plt.xlabel("Time [s]")
-# plt.ylabel("Acceleration [m/s^2]")
-# plt.legend()
-# plt.grid(True)
-# plt.show()
-#
-# plt.plot(np,VES.static_margin(np), color = "black", linewidth= "2",label= "Static Margin over Time")
-# plt.title('Static Margin over Time')
-# plt.xlabel('time [s]')
-# plt.ylabel('Static Margin [c]')
-# plt.axvline(4.5, color='blue', linestyle='--', linewidth=1.5, label='Burnout')
-# plt.axvline(187.531, color='magenta', linestyle='--', linewidth=1.5, label='Touchdown')
-# plt.axvline(0.724, color='green', linestyle='--', linewidth=1.5, label='Out of Rail')
-# plt.grid(True)
-# plt.legend()
-# plt.show()
-
-# plt.plot(TestFlight.speed(np),TestFlight.static_margin(np), color = "red", linewidth= "2", label="Static Margin over Rocket Velocity")
-# plt.xlabel("Rocket Velocity [m/s]")
-# plt.ylabel("Static Margin [c]")
-# plt.axvline(272.08, color='blue', linestyle='--', linewidth=1.5, label='Burnout')
-# plt.axvline(6.81, color='magenta', linestyle='--', linewidth=1.5, label='Touchdown')
-# plt.axvline(36.90, color='green', linestyle='--', linewidth=1.5, label='Out of Rail')
-# plt.legend()
-# plt.grid(True)
-# plt.show()
-#
-# plt.plot(np1,TestFlight.vz(np1),'k')
-# plt.plot(np2,TestFlight.vz(np2),'r')
-# plt.axvline(25.29, color='magenta', linestyle='--', linewidth=1.5, label='Apogee Time')
-#
-# plt.xlabel("Time [s]")
-# plt.ylabel("Speed (m/s)")
-# plt.legend(["Speed during burnout and coasting","Speed during descend"])
-# plt.grid(True)
-# plt.show()
-#
-#
-# #
-# TestFlight.export_data("data_MOD_airb_2250_10.csv","altitude","speed")
-# print("completed")
-#TestFlight.export_kml("trajectory_google_earth_pro.kml")
-
-
-# plt.plot(np, TestFlight.vx(np),'k')
-# plt.plot(np,TestFlight.vy(np),'r')
-# plt.plot(np,(TestFlight.vy(np)**2 + TestFlight.vx(np)**2)**(1/2),'r')
-# plt.axvline(25.29, color='magenta', linestyle='--', linewidth=1.5, label='Apogee Time')
-# plt.xlabel("time [s]")
-# plt.ylabel("velocity [m/s]")
-# plt.legend(["Velocity over time","Apogee Time"])
-# plt.grid(True)
-# plt.show()
+VES.draw()
